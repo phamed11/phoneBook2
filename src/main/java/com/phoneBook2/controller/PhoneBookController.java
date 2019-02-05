@@ -21,12 +21,12 @@ public class PhoneBookController {
     this.jsonConverterService = jsonConverterService;
   }
 
-  @GetMapping("/")
+  @GetMapping("/api")
   public List<Contact> main() {
     return contactService.allContacts();
   }
 
-  @GetMapping("/db")
+  @GetMapping("/api/db")
   public String sendFileFromDB() {
     return jsonConverterService.sendAllContactsToJson();
   }

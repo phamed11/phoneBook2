@@ -1,7 +1,7 @@
 package com.phoneBook2;
 
-//import com.phoneBook2.models.Address;
-//import com.phoneBook2.models.Contact;
+import com.phoneBook2.models.Address;
+import com.phoneBook2.models.Contact;
 import com.phoneBook2.services.ContactService;
 import com.phoneBook2.services.JsonConverterService;
 import org.springframework.beans.factory.annotation.Autowired;
