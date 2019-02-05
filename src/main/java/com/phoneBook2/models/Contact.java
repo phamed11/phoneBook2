@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -57,7 +58,9 @@ public class Contact implements Serializable {
     this.address = address;
   }
 
-  public String getName() {
+  public String fullName() {
     return firstName + " " + lastName;
   }
+
+
 }

@@ -43,7 +43,6 @@ public class JsonConverterService implements HasLogger {
     }
   }
 
-
   public List<Contact> jsonToContacts(Path path) {
     if (path == null) {
       getLogger().error("File is missing!");
@@ -73,5 +72,9 @@ public class JsonConverterService implements HasLogger {
   public String sendAllContactsToJson() {
     return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting()
         .create().toJson(contactRepository.findAll(), COLLECTION_TYPE);
+  }
+
+  public List<Contact> dbToJsonToContactList() {
+    return new Gson().fromJson(sendAllContactsToJson(), COLLECTION_TYPE);
   }
 }

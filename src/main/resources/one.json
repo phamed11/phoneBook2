@@ -1,0 +1,18 @@
+[
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "dateOfBirth": "19891002",
+    "phoneNumber": [
+      "1-202-555-0164"
+    ],
+    "address": [
+      {
+        "country": "California",
+        "zipCode": "92614",
+        "city": "Irvine",
+        "street": "950 Joy Lane"
+      }
+    ]
+  }
+]
