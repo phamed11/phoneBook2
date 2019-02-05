@@ -55,11 +55,19 @@ public class ContactServiceImpl implements ContactService, HasLogger {
     }
     if (contactExistsByName(contact.fullName())) {
       Contact toDelete = allContacts().stream()
-         .filter(contact1 -> contact1.fullName().equals(contact.fullName()))
+          .filter(contact1 -> contact1.fullName().equals(contact.fullName()))
           .findAny()
           .orElse(null);
       contactRepository.delete(toDelete);
     }
+  }
+
+  public List<Contact> findContact(String firstName, String lastName) {
+    return contactRepository.findByLastnameOrFirstname(firstName, lastName);
+  }
+
+  public List<Contact> findContactName(String lastName, String firstName) {
+    return contactRepository.findByLastNameOrFirstName(lastName, firstName);
   }
 }
 

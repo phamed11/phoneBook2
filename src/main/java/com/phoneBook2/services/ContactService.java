@@ -12,4 +12,6 @@ public interface ContactService {
   void addContact(Contact contact) throws ContactNotProvidedException;
   boolean contactExistsByName(String name) throws ContactNotFoundException;
   void deleteContact(Contact contact) throws ContactNotProvidedException;
+  List<Contact> findContact(String firstName, String lastName);
+  List<Contact> findContactName(String lastName, String firstName);
 }

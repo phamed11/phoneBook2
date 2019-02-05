@@ -44,12 +44,24 @@ public class PhoneBookRestController {
 
   @DeleteMapping("/delete")
   public ResponseEntity<?> deleteContact(@RequestBody Contact contact) {
-    if(contactService.contactExistsByName(contact.fullName())) {
+    if (contactService.contactExistsByName(contact.fullName())) {
       contactService.deleteContact(contact);
       return ResponseEntity.status(200).body("Contact with name: " + contact.fullName() + " deleted");
     } else {
       return ResponseEntity.status(404).body("Contact not found");
     }
+  }
+
+  @GetMapping("/name")
+  public List<Contact> findByName(@RequestParam (value = "firstName", required = false) String firstName,
+                            @RequestParam(value = "lastName", required = false) String lastName){
+    return contactService.findContact(firstName, lastName);
+  }
+
+  @GetMapping("/name2")
+  public List<Contact> findByName2(@RequestParam (value = "firstName", required = false) String firstName,
+                                  @RequestParam(value = "lastName", required = false) String lastName){
+    return contactService.findContactName(firstName, lastName);
   }
 }
 
