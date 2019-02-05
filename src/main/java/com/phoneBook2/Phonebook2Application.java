@@ -16,7 +16,7 @@ import java.util.Arrays;
 @SpringBootApplication
 public class Phonebook2Application implements CommandLineRunner {
 
-  public static final String DATA_JSON = "src/main/resources/data.json";
+  public static final String DATA_JSON = "Assets/data.json";
   private JsonConverterService jsonConverterService;
   private ContactService contactService;
 
