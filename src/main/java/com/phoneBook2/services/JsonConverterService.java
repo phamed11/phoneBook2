@@ -31,7 +31,7 @@ public class JsonConverterService implements HasLogger {
     this.contactRepository = contactRepository;
   }
 
-  public String contactsToJson(List<Contact> contacts, Path path) {
+  public void contactsToJson(List<Contact> contacts, Path path) {
     try {
       if (!Files.exists(path.getParent())) {
         Files.createDirectories(path.getParent());
@@ -41,7 +41,6 @@ public class JsonConverterService implements HasLogger {
     } catch (IOException e) {
       e.getMessage();
     }
-    return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(contacts, COLLECTION_TYPE);
   }
 
 
@@ -71,4 +70,7 @@ public class JsonConverterService implements HasLogger {
         .collect(Collectors.toList());
   }
 
+  public String sendAllContactsToJson() {
+    return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(contactRepository.findAll(), COLLECTION_TYPE);
+  }
 }

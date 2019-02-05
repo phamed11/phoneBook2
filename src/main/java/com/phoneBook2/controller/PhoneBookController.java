@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -25,12 +27,12 @@ public class PhoneBookController {
   }
 
   @GetMapping
-  public List<Contact> main(){
+  public List<Contact> main() {
     return contactService.allContacts();
   }
 
-  @GetMapping("/file")
-  public String sendFile() {
-    return jsonConverterService.contactsToJson(contactService.allContacts(), Paths.get(TO_DATA_JSON));
+  @GetMapping("/db")
+  public String sendFileFromDB() {
+    return jsonConverterService.sendAllContactsToJson();
   }
 }
