@@ -1,12 +1,12 @@
 package com.phoneBook2.models;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,16 +16,22 @@ public class Contact {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long Id;
+  private Long id;
   private String title;
   private String firstName;
   private String lastName;
   private String dateOfBirth;
-  private List<String> phoneNumber;
+  @ElementCollection
+  @CollectionTable(name = "phoneNumber")
+  private List<String> phoneNumber = new ArrayList<>();
+  @ManyToMany(cascade=CascadeType.ALL)
   private List<Address> address;
 
-  public Contact(Long id, String title, String firstName, String lastName, String dateOfBirth, List<String> phoneNumber, List<Address> address) {
-    Id = id;
+
+  public Contact() {
+  }
+
+  public Contact(String title, String firstName, String lastName, String dateOfBirth, List<String> phoneNumber, List<Address> address) {
     this.title = title;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -34,12 +40,12 @@ public class Contact {
     this.address = address;
   }
 
-  public Contact(Long id, String firstName, String lastName, String dateOfBirth, List<String> phoneNumber, List<Address> address) {
-    Id = id;
+  public Contact(String firstName, String lastName, String dateOfBirth, List<String> phoneNumber, List<Address> address) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.dateOfBirth = dateOfBirth;
     this.phoneNumber = phoneNumber;
     this.address = address;
   }
+
 }

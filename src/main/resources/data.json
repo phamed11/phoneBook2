@@ -142,7 +142,7 @@
     "firstName": "Helen",
     "lastName": "Parrish",
     "dateOfBirth": "20000730",
-    "phoneNumber": [ "1-202-555-0189" ],
+    "phoneNumber": [ "1-202-555-0189" , "1-202-555-0189" ],
     "address": [ {
       "country": "West Virginia",
       "zipCode": "25414",
