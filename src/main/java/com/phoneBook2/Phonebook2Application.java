@@ -36,7 +36,7 @@ public class Phonebook2Application implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
 
-    jsonConverterService.saveJsonToDB(Paths.get(FROM_DATA_JSON));
+//    jsonConverterService.saveJsonToDB(Paths.get(FROM_DATA_JSON));
 
 //    jsonConverterService.contactsToJson(contactService.allContacts(), Paths.get(TO_DATA_JSON));
 

@@ -8,4 +8,5 @@ public interface ContactService {
 
   List<Contact> allContacts();
   void addContact(Contact contact);
+  boolean contactExistsByName(String name);
 }

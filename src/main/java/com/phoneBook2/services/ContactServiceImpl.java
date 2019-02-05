@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ContactServiceImpl implements ContactService, HasLogger {
@@ -27,7 +28,21 @@ public class ContactServiceImpl implements ContactService, HasLogger {
     if (contact == null) {
       throw new ContactNotFoundException("Contact not provided!");
     }
-    contactRepository.save(contact);
-    getLogger().info("Contact created");
+    if (!contactExistsByName(contact.getName())) {
+      contactRepository.save(contact);
+      getLogger().info("Contact created");
+    }
+  }
+
+  public boolean contactExistsByName(String name) {
+    if (name == null || "".equals(name)) {
+      throw new ContactNotFoundException("Name not provided");
+    }
+      List<Contact> contactsFound = allContacts()
+          .stream()
+          .filter(contact -> name.equals(contact.getName()))
+          .collect(Collectors.toList());
+
+    return contactsFound.size() != 0;
   }
 }
