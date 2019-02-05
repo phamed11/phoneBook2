@@ -1,7 +1,7 @@
 package com.phoneBook2;
 
-import com.phoneBook2.models.Address;
-import com.phoneBook2.models.Contact;
+//import com.phoneBook2.models.Address;
+//import com.phoneBook2.models.Contact;
 import com.phoneBook2.services.ContactService;
 import com.phoneBook2.services.JsonConverterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +38,12 @@ public class Phonebook2Application implements CommandLineRunner {
 
     jsonConverterService.saveJsonToDB(Paths.get(FROM_DATA_JSON));
 
-    Contact peter = new Contact("Mr", "peter", "antal", "19771126", (Arrays.asList("1-445-444-44444")),
-        (Arrays.asList(new Address("Hungary", "1136", "Budapest", "Gabor Aron"))));
-
-    contactService.addContact(peter);
-
-    jsonConverterService.contactsToJson(contactService.allContacts(), Paths.get(TO_DATA_JSON));
+//    Contact peter = new Contact("Mr", "peter", "antal", "19771126", (Arrays.asList("1-445-444-44444")),
+//        (Arrays.asList(new Address("Hungary", "1136", "Budapest", "Gabor Aron"))));
+//
+//    contactService.addContact(peter);
+//
+//    jsonConverterService.contactsToJson(contactService.allContacts(), Paths.get(TO_DATA_JSON));
 
   }
 }

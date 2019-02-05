@@ -71,6 +71,7 @@ public class JsonConverterService implements HasLogger {
   }
 
   public String sendAllContactsToJson() {
-    return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(contactRepository.findAll(), COLLECTION_TYPE);
+    return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting()
+        .create().toJson(contactRepository.findAll(), COLLECTION_TYPE);
   }
 }

@@ -7,16 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
 public class PhoneBookController {
 
-  public static final String TO_DATA_JSON = "Assets/data.json";
   private ContactService contactService;
   private JsonConverterService jsonConverterService;
 
@@ -26,7 +21,7 @@ public class PhoneBookController {
     this.jsonConverterService = jsonConverterService;
   }
 
-  @GetMapping
+  @GetMapping("/")
   public List<Contact> main() {
     return contactService.allContacts();
   }
