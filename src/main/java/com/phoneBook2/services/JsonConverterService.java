@@ -1,7 +1,9 @@
 package com.phoneBook2.services;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.phoneBook2.exceptions.JsonConverterFileNotFoundException;
 import com.phoneBook2.models.Contact;
 import com.phoneBook2.repositories.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +32,18 @@ public class JsonConverterService {
   }
 
   public void contactsToJson(List<Contact> contacts, Path path) {
-    // TODO exceptions to make
     try {
-      Files.write(path, new Gson().toJson(contacts, COLLECTION_TYPE).getBytes());
+      Files.write(path, new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(contacts, COLLECTION_TYPE).getBytes());
     } catch (IOException e) {
-      e.printStackTrace();
+      e.getMessage();
     }
   }
 
 
   public List<Contact> jsonToContacts(Path path) {
+    if (path == null) {
+      throw new JsonConverterFileNotFoundException("File is missing!");
+    }
     String content = "";
     try {
       content = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);

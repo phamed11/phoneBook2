@@ -1,5 +1,6 @@
 package com.phoneBook2.models;
 
+import com.google.gson.annotations.Expose;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.LazyCollection;
@@ -18,15 +19,21 @@ public class Contact implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  @Expose
   private String title;
+  @Expose
   private String firstName;
+  @Expose
   private String lastName;
+  @Expose
   private String dateOfBirth;
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "phoneNumber")
+  @Expose
   private List<String> phoneNumber = new ArrayList<>();
   @ManyToMany(cascade=CascadeType.ALL)
   @LazyCollection(LazyCollectionOption.FALSE)
+  @Expose
   private List<Address> address;
 
 

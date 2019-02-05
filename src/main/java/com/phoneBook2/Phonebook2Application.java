@@ -17,6 +17,7 @@ import java.util.Arrays;
 public class Phonebook2Application implements CommandLineRunner {
 
   public static final String DATA_JSON = "Assets/data.json";
+  public static final String FROM_DATA_JSON = "src/main/resources/testData.json";
   private JsonConverterService jsonConverterService;
   private ContactService contactService;
 
@@ -35,7 +36,7 @@ public class Phonebook2Application implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
 
-    jsonConverterService.saveJsonToDB(Paths.get(DATA_JSON));
+    jsonConverterService.saveJsonToDB(Paths.get(FROM_DATA_JSON));
 
     Contact peter = new Contact("peter", "antal", "19771126", (Arrays.asList("1-445-444-44444")),
         (Arrays.asList(new Address("Hungary", "1136", "Budapest", "Gabor Aron"))));

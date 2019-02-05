@@ -1,5 +1,6 @@
 package com.phoneBook2.services;
 
+import com.phoneBook2.exceptions.ContactNotFoundException;
 import com.phoneBook2.models.Contact;
 import com.phoneBook2.repositories.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class ContactServiceImpl implements ContactService {
   }
 
   public void addContact(Contact contact) {
+    if (contact == null) {
+      throw new ContactNotFoundException("Contact not provided!");
+    }
     contactRepository.save(contact);
   }
 }
