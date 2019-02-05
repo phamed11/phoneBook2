@@ -8,12 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Address {
+public class Address implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,16 +29,5 @@ public class Address {
     this.zipCode = zipCode;
     this.city = city;
     this.street = street;
-  }
-
-  @Override
-  public String toString() {
-    return "Address{" +
-        "id=" + id +
-        ", country='" + country + '\'' +
-        ", zipCode='" + zipCode + '\'' +
-        ", city='" + city + '\'' +
-        ", street='" + street + '\'' +
-        '}';
   }
 }

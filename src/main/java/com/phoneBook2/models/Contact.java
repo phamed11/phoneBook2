@@ -1,18 +1,19 @@
 package com.phoneBook2.models;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-public class Contact {
+public class Contact implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +22,11 @@ public class Contact {
   private String firstName;
   private String lastName;
   private String dateOfBirth;
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "phoneNumber")
   private List<String> phoneNumber = new ArrayList<>();
   @ManyToMany(cascade=CascadeType.ALL)
+  @LazyCollection(LazyCollectionOption.FALSE)
   private List<Address> address;
 
 

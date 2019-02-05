@@ -42,6 +42,8 @@ public class Phonebook2Application implements CommandLineRunner {
 
     contactService.addContact(peter);
 
+    jsonConverterService.contactsToJson(contactService.allContacts(), Paths.get(DATA_JSON));
+
   }
 }
 

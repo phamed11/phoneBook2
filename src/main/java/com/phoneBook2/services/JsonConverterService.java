@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 public class JsonConverterService {
 
   ContactRepository contactRepository;
-  public static final Type COLLECTION_TYPE = new TypeToken<List<Contact>>() {
+  public static final Type COLLECTION_TYPE = new TypeToken<Collection<Contact>>() {
   }.getType();
 
   @Autowired
@@ -28,9 +29,15 @@ public class JsonConverterService {
     this.contactRepository = contactRepository;
   }
 
-  public String contactsToJson(List<Contact> contacts) {
-    return new Gson().toJson(contacts);
+  public void contactsToJson(List<Contact> contacts, Path path) {
+    // TODO exceptions to make
+    try {
+      Files.write(path, new Gson().toJson(contacts, COLLECTION_TYPE).getBytes());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
+
 
   public List<Contact> jsonToContacts(Path path) {
     String content = "";
@@ -46,17 +53,11 @@ public class JsonConverterService {
   }
 
   public List<Contact> saveJsonToDB(Path path) {
+    // TODO exceptions to make
     List<Contact> allContacts = jsonToContacts(path);
     return allContacts.stream()
         .map(contact -> contactRepository.save(contact))
         .collect(Collectors.toList());
   }
 
-  public void saveToJsonFile(Path path) {
-    try {
-      Files.write(path, contactsToJson(contactRepository.findAll()).getBytes());
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
 }
