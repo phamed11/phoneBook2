@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ContactServiceImpl implements ContactService {
+public class ContactServiceImpl implements ContactService, HasLogger {
 
   ContactRepository contactRepository;
 
@@ -28,5 +28,6 @@ public class ContactServiceImpl implements ContactService {
       throw new ContactNotFoundException("Contact not provided!");
     }
     contactRepository.save(contact);
+    getLogger().info("Contact created");
   }
 }

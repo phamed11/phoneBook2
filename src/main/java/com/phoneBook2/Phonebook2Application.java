@@ -16,7 +16,7 @@ import java.util.Arrays;
 @SpringBootApplication
 public class Phonebook2Application implements CommandLineRunner {
 
-  public static final String DATA_JSON = "Assets/data.json";
+  public static final String TO_DATA_JSON = "Assets/data.json";
   public static final String FROM_DATA_JSON = "src/main/resources/testData.json";
   private JsonConverterService jsonConverterService;
   private ContactService contactService;
@@ -43,7 +43,7 @@ public class Phonebook2Application implements CommandLineRunner {
 
     contactService.addContact(peter);
 
-    jsonConverterService.contactsToJson(contactService.allContacts(), Paths.get(DATA_JSON));
+    jsonConverterService.contactsToJson(contactService.allContacts(), Paths.get(TO_DATA_JSON));
 
   }
 }

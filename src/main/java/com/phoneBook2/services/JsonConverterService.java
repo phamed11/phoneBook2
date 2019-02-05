@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class JsonConverterService {
+public class JsonConverterService implements HasLogger {
 
   ContactRepository contactRepository;
   public static final Type COLLECTION_TYPE = new TypeToken<Collection<Contact>>() {
@@ -33,6 +33,10 @@ public class JsonConverterService {
 
   public void contactsToJson(List<Contact> contacts, Path path) {
     try {
+      if (!Files.exists(path.getParent())) {
+        Files.createDirectories(path.getParent());
+        getLogger().info("Directory created");
+      }
       Files.write(path, new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(contacts, COLLECTION_TYPE).getBytes());
     } catch (IOException e) {
       e.getMessage();
@@ -42,11 +46,13 @@ public class JsonConverterService {
 
   public List<Contact> jsonToContacts(Path path) {
     if (path == null) {
+      getLogger().error("File is missing!");
       throw new JsonConverterFileNotFoundException("File is missing!");
     }
     String content = "";
     try {
       content = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
+      getLogger().info("Json parsed to Contacts");
     } catch (NoSuchFileException e) {
       System.out.println("File is missing!");
     } catch (IOException e) {
@@ -57,7 +63,7 @@ public class JsonConverterService {
   }
 
   public List<Contact> saveJsonToDB(Path path) {
-    // TODO exceptions to make
+
     List<Contact> allContacts = jsonToContacts(path);
     return allContacts.stream()
         .map(contact -> contactRepository.save(contact))
