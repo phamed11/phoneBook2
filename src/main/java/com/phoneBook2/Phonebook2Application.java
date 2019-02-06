@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 
 
 @SpringBootApplication
@@ -44,10 +45,7 @@ public class Phonebook2Application implements CommandLineRunner {
 
 //    contactService.addContact(imre);
 
-
 //    jsonConverterService.contactsToJson(contactService.allContacts(), Paths.get(TO_DATA_JSON));
-
-
 
   }
 }

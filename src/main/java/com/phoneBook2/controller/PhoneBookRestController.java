@@ -54,9 +54,30 @@ public class PhoneBookRestController {
 
   @GetMapping("/filter")
   public List<Contact> findByLastNameOrFirstNameOrTitle(@RequestParam(value = "lastName", required = false) String lastName,
-                                      @RequestParam(value = "firstName", required = false) String firstName,
-                                      @RequestParam(value = "title", required = false) String title) {
+                                                        @RequestParam(value = "firstName", required = false) String firstName,
+                                                        @RequestParam(value = "title", required = false) String title) {
     return contactService.findByLastNameFirstNameTitle(lastName, firstName, title);
   }
+
+  @GetMapping("/fname")
+  public List<Contact> findByFirstName(@RequestParam(value = "firstName", required = false) String firstName) {
+    return contactService.findByFirstName(firstName);
+  }
+
+  @GetMapping("/lname")
+  public List<Contact> findByLastName(@RequestParam(value = "lastName", required = false) String lastName) {
+    return contactService.findByLastName(lastName);
+  }
+
+  @GetMapping("/title")
+  public List<Contact> findByTitle(@RequestParam(value = "title", required = false) String title) {
+    return contactService.findBytitle(title);
+  }
+
+  @GetMapping("/name")
+  public List<Contact> findByName(@RequestParam(value = "name", required = false) String name) {
+    return contactService.findByName(name);
+  }
+
 }
 
