@@ -52,16 +52,11 @@ public class PhoneBookRestController {
     }
   }
 
-  @GetMapping("/name")
-  public List<Contact> findByName(@RequestParam (value = "firstName", required = false) String firstName,
-                            @RequestParam(value = "lastName", required = false) String lastName){
-    return contactService.findContact(firstName, lastName);
-  }
-
-  @GetMapping("/name2")
-  public List<Contact> findByName2(@RequestParam (value = "firstName", required = false) String firstName,
-                                  @RequestParam(value = "lastName", required = false) String lastName){
-    return contactService.findContactName(firstName, lastName);
+  @GetMapping("/filter")
+  public List<Contact> findByLastNameOrFirstNameOrTitle(@RequestParam(value = "lastName", required = false) String lastName,
+                                      @RequestParam(value = "firstName", required = false) String firstName,
+                                      @RequestParam(value = "title", required = false) String title) {
+    return contactService.findByLastNameFirstNameTitle(lastName, firstName, title);
   }
 }
 

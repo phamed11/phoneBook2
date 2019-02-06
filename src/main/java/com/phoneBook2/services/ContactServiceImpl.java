@@ -14,12 +14,10 @@ import java.util.stream.Collectors;
 public class ContactServiceImpl implements ContactService, HasLogger {
 
   private ContactRepository contactRepository;
-  private JsonConverterService jsonConverterService;
 
   @Autowired
-  public ContactServiceImpl(ContactRepository contactRepository, JsonConverterService jsonConverterService) {
+  public ContactServiceImpl(ContactRepository contactRepository) {
     this.contactRepository = contactRepository;
-    this.jsonConverterService = jsonConverterService;
   }
 
   @Override
@@ -62,13 +60,11 @@ public class ContactServiceImpl implements ContactService, HasLogger {
     }
   }
 
-  public List<Contact> findContact(String firstName, String lastName) {
-    return contactRepository.findByLastnameOrFirstname(firstName, lastName);
+  @Override
+  public List<Contact> findByLastNameFirstNameTitle(String lastName, String firstName, String title) {
+    return contactRepository.filter(lastName, firstName, title);
   }
 
-  public List<Contact> findContactName(String lastName, String firstName) {
-    return contactRepository.findByLastNameOrFirstName(lastName, firstName);
-  }
 }
 
 

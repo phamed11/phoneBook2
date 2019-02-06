@@ -11,10 +11,8 @@ import java.util.List;
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, Long> {
 
-  @Query("select c from Contact c where c.firstName = :firstName or c.lastName = :lastName")
-  List<Contact> findByLastnameOrFirstname(@Param("lastName") String lastName,
-                                          @Param("firstName") String firstName);
-
-  List<Contact> findByLastNameOrFirstName(String lastName, String firstName);
+  @Query("select c from Contact c where (c.lastName = :lastName or :lastName is null) and " +
+      "(c.firstName = :firstName or :firstName is null) and (c.title = :title or :title is null)")
+  List<Contact> filter(@Param("lastName") String lastName, @Param("firstName") String firstName, @Param("title") String title);
 }
 
