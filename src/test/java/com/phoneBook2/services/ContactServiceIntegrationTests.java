@@ -85,6 +85,12 @@ public class ContactServiceIntegrationTests {
 
   @Test
   public void contactExistsByName() {
+    List<Contact> contacts = getAllContacts();
+    String nameExists = "John Doe";
+    String nameDoesntExist = "Kis Doe";
+
+    Assert.assertTrue(contactService.contactExistsByName(nameExists));
+    Assert.assertFalse(contactService.contactExistsByName(nameDoesntExist));
   }
 
   @Test
