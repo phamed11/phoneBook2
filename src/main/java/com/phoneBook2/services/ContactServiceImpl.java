@@ -102,11 +102,10 @@ public class ContactServiceImpl implements ContactService, HasLogger {
     if (fromDate == null || toDate == null) {
       throw new ParamaterNotProvidedException("Date not provided");
     }
-    List<Contact> foundContacts = allContacts().stream()
+    return allContacts().stream()
         .filter(contact -> Integer.parseInt(contact.getDateOfBirth()) > fromDate
             && (Integer.parseInt(contact.getDateOfBirth()) < toDate))
         .collect(Collectors.toList());
-    return foundContacts;
   }
 
   @Override
