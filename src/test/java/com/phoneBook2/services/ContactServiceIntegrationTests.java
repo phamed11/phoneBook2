@@ -1,5 +1,6 @@
 package com.phoneBook2.services;
 
+import com.phoneBook2.exceptions.ContactNotFoundException;
 import com.phoneBook2.models.Address;
 import com.phoneBook2.models.Contact;
 import com.phoneBook2.repositories.ContactRepository;
@@ -94,7 +95,24 @@ public class ContactServiceIntegrationTests {
   }
 
   @Test
-  public void deleteContact() {
+  public void deleteContactIfExists() {
+    List<Contact> contactsBefore = getAllContacts();
+    Contact contact = getAllContacts().get(0);
+    contactService.deleteContact(contact);
+    List<Contact> contactsAfter = getAllContacts();
+
+    Assert.assertEquals(TEST_DATA_SIZE, contactsBefore.size());
+    Assert.assertEquals(TEST_DATA_SIZE - 1, contactsAfter.size());
+  }
+
+  @Test(expected = ContactNotFoundException.class)
+  public void deleteContactIfNotExisting() {
+    List<Contact> contactsBefore = getAllContacts();
+    contactService.deleteContact(testContact);
+    List<Contact> contactsAfter = getAllContacts();
+
+    Assert.assertEquals(TEST_DATA_SIZE, contactsBefore.size());
+    Assert.assertEquals(TEST_DATA_SIZE, contactsAfter.size());
   }
 
   @Test
