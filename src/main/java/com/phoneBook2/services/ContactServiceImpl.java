@@ -1,5 +1,6 @@
 package com.phoneBook2.services;
 
+import com.phoneBook2.exceptions.ContactAlreadyExistsException;
 import com.phoneBook2.exceptions.ContactNotFoundException;
 import com.phoneBook2.exceptions.ContactNotProvidedException;
 import com.phoneBook2.exceptions.ParamaterNotProvidedException;
@@ -26,7 +27,7 @@ public class ContactServiceImpl implements ContactService, HasLogger {
     return contactRepository.findAll();
   }
 
-  public void addContact(Contact contact) throws ContactNotProvidedException {
+  public void addContact(Contact contact) throws ContactNotProvidedException, ContactAlreadyExistsException {
     if (contact == null) {
       throw new ContactNotProvidedException("Contact not provided!");
     }
@@ -34,6 +35,8 @@ public class ContactServiceImpl implements ContactService, HasLogger {
       contactRepository.save(contact);
       getLogger().info(contact.fullName() + " added");
       getLogger().info("Contact created");
+    } else {
+      throw new ContactAlreadyExistsException("Contact already exists");
     }
   }
 
