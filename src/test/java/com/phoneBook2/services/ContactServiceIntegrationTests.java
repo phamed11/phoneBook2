@@ -21,7 +21,7 @@ import java.util.List;
 @SpringBootTest
 //@TestPropertySource(
 //    locations = "classpath:application.properties")
-public class proba {
+public class ContactServiceIntegrationTests {
 
   private static final long TEST_DATA_SIZE = 12;
   @Autowired
@@ -36,9 +36,7 @@ public class proba {
 
 
   private List<Contact> getAllContacts() {
-    List<Contact> contacts = new ArrayList<>();
-    contactRepository.findAll().forEach(contacts::add);
-    return contacts;
+    return contactRepository.findAll();
   }
 
   @Before
