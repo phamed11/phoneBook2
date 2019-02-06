@@ -58,27 +58,27 @@ public class PhoneBookRestController {
   }
 
   @GetMapping("/fname")
-  public List<Contact> findByFirstName(@RequestParam(value = "firstName", required = false) String firstName) {
+  public List<Contact> findByFirstName(@RequestParam(value = "firstName", required = true) String firstName) {
     return contactService.findByFirstName(firstName);
   }
 
   @GetMapping("/lname")
-  public List<Contact> findByLastName(@RequestParam(value = "lastName", required = false) String lastName) {
+  public List<Contact> findByLastName(@RequestParam(value = "lastName", required = true) String lastName) {
     return contactService.findByLastName(lastName);
   }
 
   @GetMapping("/title")
-  public List<Contact> findByTitle(@RequestParam(value = "title", required = false) String title) {
+  public List<Contact> findByTitle(@RequestParam(value = "title", required = true) String title) {
     return contactService.findBytitle(title);
   }
 
   @GetMapping("/name")
-  public Contact findByName(@RequestParam(value = "name", required = false) String name) {
+  public Contact findByName(@RequestParam(value = "name", required = true) String name) {
     return contactService.findByName(name);
   }
 
   @GetMapping("/phone")
-  public List<Contact> findByPhoneNumber(@RequestParam(value = "phone", required = false) String phoneNumber) {
+  public List<Contact> findByPhoneNumber(@RequestParam(value = "phone", required = true) String phoneNumber) {
     return contactService.findByPhoneNumber(phoneNumber);
   }
 
@@ -98,6 +98,11 @@ public class PhoneBookRestController {
   public List<Contact> findByDateOfBirth(@RequestParam (value = "fromDate", required = true) Integer fromDate,
                                          @RequestParam (value = "toDate", required = true) Integer toDate) {
     return contactService.findByDateOfBirth(fromDate, toDate);
+  }
+
+  @GetMapping("/address")
+  public List<Contact> findbyAddress(@RequestParam (value = "address", required = true) String address) {
+    return contactService.findByAddress(address);
   }
 }
 

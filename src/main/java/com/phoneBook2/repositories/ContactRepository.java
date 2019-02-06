@@ -28,5 +28,10 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
   Contact findbyName(@Param("name") String name);
 
 
+  @Query("select c from Contact c join c.address a where a.country like :address or a.city " +
+      "like :address or a.zipCode like :address or a.street like :address")
+  List<Contact> findByAllAddress(@Param("address") String address);
+
+
 }
 

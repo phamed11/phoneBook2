@@ -144,6 +144,14 @@ public class ContactServiceImpl implements ContactService, HasLogger {
       }
     }
   }
+
+  @Override
+  public List<Contact> findByAddress(String address) throws ParamaterNotProvidedException{
+    if (address == null || "".equals(address)) {
+      throw new ParamaterNotProvidedException("Parameter not provided");
+    }
+    return contactRepository.findByAllAddress(address);
+  }
 }
 
 
