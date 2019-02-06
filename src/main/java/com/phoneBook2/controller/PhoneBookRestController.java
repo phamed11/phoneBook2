@@ -75,7 +75,7 @@ public class PhoneBookRestController {
   }
 
   @GetMapping("/name")
-  public List<Contact> findByName(@RequestParam(value = "name", required = false) String name) {
+  public Contact findByName(@RequestParam(value = "name", required = false) String name) {
     return contactService.findByName(name);
   }
 

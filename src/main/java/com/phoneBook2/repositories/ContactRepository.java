@@ -22,7 +22,7 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
   List<Contact> findByTitle(String title);
 
   @Query("select c from Contact c where concat(c.firstName,' ',c.lastName) = :name")
-  List<Contact> findbyName(@Param("name") String name);
+  Contact findbyName(@Param("name") String name);
 
 
 }

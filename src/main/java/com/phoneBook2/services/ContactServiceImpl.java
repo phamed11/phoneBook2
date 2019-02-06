@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ContactServiceImpl implements ContactService, HasLogger {
@@ -36,28 +35,21 @@ public class ContactServiceImpl implements ContactService, HasLogger {
     }
   }
 
-  public boolean contactExistsByName(String name) throws ContactNotFoundException {
+  public boolean contactExistsByName(String name) throws ParamaterNotProvidedException {
     if (name == null || "".equals(name)) {
-      throw new ContactNotFoundException("Name not provided");
+      throw new ParamaterNotProvidedException("Name not provided");
     }
-    List<Contact> contactsFound = allContacts()
-        .stream()
-        .filter(contact -> name.equals(contact.fullName()))
-        .collect(Collectors.toList());
-
-    return contactsFound.size() != 0;
+    return contactRepository.findbyName(name) != null;
   }
 
-  public void deleteContact(Contact contact) throws ContactNotProvidedException, ContactNotFoundException {
+  public void deleteContact(Contact contact) throws ParamaterNotProvidedException, ContactNotFoundException {
     if (contact == null) {
-      throw new ContactNotProvidedException("Contact not provided!");
+      throw new ParamaterNotProvidedException("Contact not provided!");
     }
     if (contactExistsByName(contact.fullName())) {
-      Contact toDelete = allContacts().stream()
-          .filter(contact1 -> contact1.fullName().equals(contact.fullName()))
-          .findAny()
-          .orElse(null);
-      contactRepository.delete(toDelete);
+      contactRepository.delete(contactRepository.findbyName(contact.fullName()));
+    } else {
+      throw new ContactNotFoundException("Contact not found");
     }
   }
 
@@ -95,13 +87,12 @@ public class ContactServiceImpl implements ContactService, HasLogger {
   }
 
   @Override
-  public List<Contact> findByName(String name) {
+  public Contact findByName(String name) {
     if (name == null || "".equals(name)) {
       throw new ParamaterNotProvidedException("Name not provided");
     }
     return contactRepository.findbyName(name);
   }
-
 
 }
 
