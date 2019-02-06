@@ -2,6 +2,7 @@ package com.phoneBook2.services;
 
 import com.phoneBook2.exceptions.ContactAlreadyExistsException;
 import com.phoneBook2.exceptions.ContactNotProvidedException;
+import com.phoneBook2.exceptions.ParamaterNotProvidedException;
 import com.phoneBook2.models.Address;
 import com.phoneBook2.models.Contact;
 import com.phoneBook2.repositories.ContactRepository;
@@ -84,8 +85,26 @@ public class ContactServiceImplUnitTest {
     contactService.addContact(testContact);
   }
 
+  @Test(expected = ParamaterNotProvidedException.class)
+  public void contactExistsByNameEmptyString() throws ParamaterNotProvidedException {
+    contactService.contactExistsByName("");
+  }
+
+  @Test(expected = ParamaterNotProvidedException.class)
+  public void contactExistsByNameNull() throws ParamaterNotProvidedException {
+    contactService.contactExistsByName(null);
+  }
+
   @Test
-  public void contactExistsByName() {
+  public void contactExistsByNameTrue() throws ParamaterNotProvidedException {
+    when(contactRepository.findbyName(fullName)).thenReturn(testContact);
+    assertTrue(contactService.contactExistsByName(fullName));
+  }
+
+  @Test
+  public void contactExistsByNameFalse() throws ParamaterNotProvidedException {
+    when(contactRepository.findbyName(fullName)).thenReturn(null);
+    assertFalse(contactService.contactExistsByName(fullName));
   }
 
   @Test
