@@ -47,9 +47,9 @@ public class ContactServiceImpl implements ContactService, HasLogger {
     return contactRepository.findbyName(name) != null;
   }
 
-  public void deleteContact(Contact contact) throws ParamaterNotProvidedException, ContactNotFoundException {
+  public void deleteContact(Contact contact) throws ContactNotProvidedException, ContactNotFoundException {
     if (contact == null) {
-      throw new ParamaterNotProvidedException("Contact not provided!");
+      throw new ContactNotProvidedException("Contact not provided!");
     }
     if (contactExistsByName(contact.fullName())) {
       contactRepository.delete(contactRepository.findbyName(contact.fullName()));

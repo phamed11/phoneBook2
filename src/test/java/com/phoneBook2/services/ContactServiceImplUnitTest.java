@@ -1,6 +1,7 @@
 package com.phoneBook2.services;
 
 import com.phoneBook2.exceptions.ContactAlreadyExistsException;
+import com.phoneBook2.exceptions.ContactNotFoundException;
 import com.phoneBook2.exceptions.ContactNotProvidedException;
 import com.phoneBook2.exceptions.ParamaterNotProvidedException;
 import com.phoneBook2.models.Address;
@@ -33,7 +34,7 @@ public class ContactServiceImplUnitTest {
   @Rule
   public ExpectedException thrown = ExpectedException.none();
   private String firstName = "Joe";
-  private String lastName = "`Smith";
+  private String lastName = "Smith";
   private String title = "`Mr";
   private String dateOfBirth = "`19891123";
   private List<String> phoneNumbers = Arrays.asList("1-123-123-1234");
@@ -107,8 +108,23 @@ public class ContactServiceImplUnitTest {
     assertFalse(contactService.contactExistsByName(fullName));
   }
 
+  @Test(expected = ContactNotProvidedException.class)
+  public void deleteContactContactNull() {
+    contactService.deleteContact(null);
+  }
+
+  @Test(expected = ContactNotFoundException.class)
+  public void deleteContactContactContactNotExists() {
+    when(contactRepository.findbyName(testContact.fullName())).thenReturn(null);
+    contactService.contactExistsByName(testContact.fullName());
+    contactService.deleteContact(testContact);
+  }
+
   @Test
-  public void deleteContact() {
+  public void deleteContactContactContactExists() {
+    when(contactRepository.findbyName(testContact.fullName())).thenReturn(testContact);
+    contactService.contactExistsByName(testContact.fullName());
+    contactService.deleteContact(testContact);
   }
 
   @Test
