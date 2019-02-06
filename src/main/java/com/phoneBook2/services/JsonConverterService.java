@@ -43,7 +43,7 @@ public class JsonConverterService implements HasLogger {
     }
   }
 
-  public List<Contact> jsonToContacts(Path path) {
+  private List<Contact> jsonToContacts(Path path) {
     if (path == null) {
       getLogger().error("File is missing!");
       throw new JsonConverterFileNotFoundException("File is missing!");

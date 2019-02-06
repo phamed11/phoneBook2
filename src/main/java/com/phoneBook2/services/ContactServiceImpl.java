@@ -34,7 +34,6 @@ public class ContactServiceImpl implements ContactService, HasLogger {
     if (!contactExistsByName(contact.fullName())) {
       contactRepository.save(contact);
       getLogger().info(contact.fullName() + " added");
-      getLogger().info("Contact created");
     } else {
       throw new ContactAlreadyExistsException("Contact already exists");
     }
@@ -69,7 +68,7 @@ public class ContactServiceImpl implements ContactService, HasLogger {
   }
 
   @Override
-  public List<Contact> findByFirstName(String firstName) throws ParamaterNotProvidedException{
+  public List<Contact> findByFirstName(String firstName) throws ParamaterNotProvidedException {
     if (firstName == null || "".equals(firstName)) {
       throw new ParamaterNotProvidedException("First name not provided");
     }
@@ -85,7 +84,7 @@ public class ContactServiceImpl implements ContactService, HasLogger {
   }
 
   @Override
-  public List<Contact> findBytitle(String title) throws ParamaterNotProvidedException{
+  public List<Contact> findBytitle(String title) throws ParamaterNotProvidedException {
     if (title == null || "".equals(title)) {
       throw new ParamaterNotProvidedException("Title not provided");
     }
@@ -93,7 +92,7 @@ public class ContactServiceImpl implements ContactService, HasLogger {
   }
 
   @Override
-  public List<Contact> findByPhoneNumber(String phoneNumber) throws ParamaterNotProvidedException{
+  public List<Contact> findByPhoneNumber(String phoneNumber) throws ParamaterNotProvidedException {
     if (phoneNumber == null || "".equals(phoneNumber)) {
       throw new ParamaterNotProvidedException("Phone number not provided");
     }
@@ -101,7 +100,7 @@ public class ContactServiceImpl implements ContactService, HasLogger {
   }
 
   @Override
-  public List<Contact> findByDateOfBirth(Integer fromDate, Integer toDate) throws ParamaterNotProvidedException{
+  public List<Contact> findByDateOfBirth(Integer fromDate, Integer toDate) throws ParamaterNotProvidedException {
     if (fromDate == null || toDate == null) {
       throw new ParamaterNotProvidedException("Date not provided");
     }
@@ -120,7 +119,7 @@ public class ContactServiceImpl implements ContactService, HasLogger {
   }
 
   @Override
-  public void addBulkContact(List<Contact> contactList) throws ContactNotProvidedException{
+  public void addBulkContact(List<Contact> contactList) throws ContactNotProvidedException {
     if (contactList == null || contactList.size() == 0) {
       throw new ContactNotProvidedException("Empty or non existent contactlist");
     }
@@ -133,7 +132,7 @@ public class ContactServiceImpl implements ContactService, HasLogger {
   }
 
   @Override
-  public void deleteBulkContact(List<Contact> contactList) throws ContactNotFoundException, ContactNotProvidedException{
+  public void deleteBulkContact(List<Contact> contactList) throws ContactNotFoundException, ContactNotProvidedException {
     if (contactList == null || contactList.size() == 0) {
       throw new ContactNotProvidedException("Empty or non existent contactlist");
     }
@@ -148,7 +147,7 @@ public class ContactServiceImpl implements ContactService, HasLogger {
   }
 
   @Override
-  public List<Contact> findByAddress(String address) throws ParamaterNotProvidedException{
+  public List<Contact> findByAddress(String address) throws ParamaterNotProvidedException {
     if (address == null || "".equals(address)) {
       throw new ParamaterNotProvidedException("Parameter not provided");
     }

@@ -127,31 +127,43 @@ public class ContactServiceImplUnitTest {
     contactService.deleteContact(testContact);
   }
 
-  @Test
-  public void findByLastNameFirstNameTitle() {
+  @Test(expected = ParamaterNotProvidedException.class)
+  public void findByLastNameFirstNameTitleNull() {
+    contactService.findByLastNameFirstNameTitle(lastName, null, null);
   }
 
-  @Test
+  @Test(expected = ParamaterNotProvidedException.class)
+  public void findByLastNameFirstNameTitleEmptyString() {
+    contactService.findByLastNameFirstNameTitle(lastName, firstName, "");
+  }
+
+  @Test(expected = ParamaterNotProvidedException.class)
   public void findByFirstName() {
+    contactService.findByFirstName(null);
   }
 
-  @Test
+  @Test(expected = ParamaterNotProvidedException.class)
   public void findByLastName() {
+    contactService.findByLastName("");
   }
 
-  @Test
+  @Test(expected = ParamaterNotProvidedException.class)
   public void findBytitle() {
+    contactService.findBytitle(null);
   }
 
-  @Test
+  @Test(expected = ParamaterNotProvidedException.class)
   public void findByPhoneNumber() {
+    contactService.findByPhoneNumber("");
   }
 
-  @Test
+  @Test(expected = ParamaterNotProvidedException.class)
   public void findByDateOfBirth() {
+    contactService.findByDateOfBirth(null, 19921126);
   }
 
-  @Test
+  @Test(expected = ParamaterNotProvidedException.class)
   public void findByName() {
+    contactService.findByName("");
   }
 }
