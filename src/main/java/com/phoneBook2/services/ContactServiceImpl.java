@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ContactServiceImpl implements ContactService, HasLogger {
@@ -31,6 +32,7 @@ public class ContactServiceImpl implements ContactService, HasLogger {
     }
     if (!contactExistsByName(contact.fullName())) {
       contactRepository.save(contact);
+      getLogger().info(contact.fullName() + " added");
       getLogger().info("Contact created");
     }
   }
@@ -48,13 +50,14 @@ public class ContactServiceImpl implements ContactService, HasLogger {
     }
     if (contactExistsByName(contact.fullName())) {
       contactRepository.delete(contactRepository.findbyName(contact.fullName()));
+      getLogger().info(contact.fullName() + " deleted");
     } else {
       throw new ContactNotFoundException("Contact not found");
     }
   }
 
   @Override
-  public List<Contact> findByLastNameFirstNameTitle(String lastName, String firstName, String title) {
+  public List<Contact> findByLastNameFirstNameTitle(String lastName, String firstName, String title) throws ParamaterNotProvidedException {
     if (lastName == null || "".equals(lastName) || firstName == null || "".equals(firstName)
         || title == null || "".equals(title)) {
       throw new ParamaterNotProvidedException("Paramater is not provided");
@@ -63,7 +66,7 @@ public class ContactServiceImpl implements ContactService, HasLogger {
   }
 
   @Override
-  public List<Contact> findByFirstName(String firstName) {
+  public List<Contact> findByFirstName(String firstName) throws ParamaterNotProvidedException{
     if (firstName == null || "".equals(firstName)) {
       throw new ParamaterNotProvidedException("First name not provided");
     }
@@ -71,7 +74,7 @@ public class ContactServiceImpl implements ContactService, HasLogger {
   }
 
   @Override
-  public List<Contact> findByLastName(String lastName) {
+  public List<Contact> findByLastName(String lastName) throws ParamaterNotProvidedException {
     if (lastName == null || "".equals(lastName)) {
       throw new ParamaterNotProvidedException("Last name not provided");
     }
@@ -79,7 +82,7 @@ public class ContactServiceImpl implements ContactService, HasLogger {
   }
 
   @Override
-  public List<Contact> findBytitle(String title) {
+  public List<Contact> findBytitle(String title) throws ParamaterNotProvidedException{
     if (title == null || "".equals(title)) {
       throw new ParamaterNotProvidedException("Title not provided");
     }
@@ -87,13 +90,60 @@ public class ContactServiceImpl implements ContactService, HasLogger {
   }
 
   @Override
-  public Contact findByName(String name) {
+  public List<Contact> findByPhoneNumber(String phoneNumber) throws ParamaterNotProvidedException{
+    if (phoneNumber == null || "".equals(phoneNumber)) {
+      throw new ParamaterNotProvidedException("Phone number not provided");
+    }
+    return contactRepository.findByPhoneNumber(phoneNumber);
+  }
+
+  @Override
+  public List<Contact> findByDateOfBirth(Integer fromDate, Integer toDate) throws ParamaterNotProvidedException{
+    if (fromDate == null || toDate == null) {
+      throw new ParamaterNotProvidedException("Date not provided");
+    }
+    List<Contact> foundContacts = allContacts().stream()
+        .filter(contact -> Integer.parseInt(contact.getDateOfBirth()) > fromDate
+            && (Integer.parseInt(contact.getDateOfBirth()) < toDate))
+        .collect(Collectors.toList());
+    return foundContacts;
+  }
+
+  @Override
+  public Contact findByName(String name) throws ParamaterNotProvidedException {
     if (name == null || "".equals(name)) {
       throw new ParamaterNotProvidedException("Name not provided");
     }
     return contactRepository.findbyName(name);
   }
 
+  @Override
+  public void addBulkContact(List<Contact> contactList) throws ContactNotProvidedException{
+    if (contactList == null || contactList.size() == 0) {
+      throw new ContactNotProvidedException("Empty or non existent contactlist");
+    }
+    for (Contact contact : contactList) {
+      if (!contactExistsByName(contact.fullName())) {
+        contactRepository.save(contact);
+        getLogger().info(contact.fullName() + " added");
+      }
+    }
+  }
+
+  @Override
+  public void deleteBulkContact(List<Contact> contactList) throws ContactNotFoundException, ContactNotProvidedException{
+    if (contactList == null || contactList.size() == 0) {
+      throw new ContactNotProvidedException("Empty or non existent contactlist");
+    }
+    for (Contact contact : contactList) {
+      if (contactExistsByName(contact.fullName())) {
+        deleteContact(contact);
+      } else {
+        getLogger().error(contact.fullName() + " does not exist");
+        throw new ContactNotFoundException("contact not found");
+      }
+    }
+  }
 }
 
 

@@ -1,6 +1,5 @@
 package com.phoneBook2.controller;
 
-import com.phoneBook2.exceptions.ContactNotFoundException;
 import com.phoneBook2.models.Contact;
 import com.phoneBook2.services.ContactService;
 import com.phoneBook2.services.JsonConverterService;
@@ -41,7 +40,6 @@ public class PhoneBookRestController {
     return contactService.allContacts();
   }
 
-
   @DeleteMapping("/delete")
   public ResponseEntity<?> deleteContact(@RequestBody Contact contact) {
     if (contactService.contactExistsByName(contact.fullName())) {
@@ -79,5 +77,27 @@ public class PhoneBookRestController {
     return contactService.findByName(name);
   }
 
+  @GetMapping("/phone")
+  public List<Contact> findByPhoneNumber(@RequestParam(value = "phone", required = false) String phoneNumber) {
+    return contactService.findByPhoneNumber(phoneNumber);
+  }
+
+  @DeleteMapping("/bdelete")
+  public ResponseEntity<?> bulkDelete(@RequestBody List<Contact> contactList) {
+    contactService.deleteBulkContact(contactList);
+    return ResponseEntity.status(200).body("deleted");
+  }
+
+  @PostMapping("/badd")
+  public ResponseEntity<?> bulkAdd(@RequestBody List<Contact> contactList) {
+    contactService.addBulkContact(contactList);
+    return ResponseEntity.ok("added");
+  }
+
+  @GetMapping("/bDate")
+  public List<Contact> findByDateOfBirth(@RequestParam (value = "fromDate", required = true) Integer fromDate,
+                                         @RequestParam (value = "toDate", required = true) Integer toDate) {
+    return contactService.findByDateOfBirth(fromDate, toDate);
+  }
 }
 

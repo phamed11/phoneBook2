@@ -21,6 +21,9 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
 
   List<Contact> findByTitle(String title);
 
+  List<Contact> findByPhoneNumber(String phoneNumber);
+
+
   @Query("select c from Contact c where concat(c.firstName,' ',c.lastName) = :name")
   Contact findbyName(@Param("name") String name);
 

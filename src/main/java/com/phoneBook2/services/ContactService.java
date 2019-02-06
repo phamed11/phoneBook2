@@ -16,6 +16,11 @@ public interface ContactService {
   List<Contact> findByFirstName(String firstName);
   List<Contact> findByLastName(String lastName);
   List<Contact> findBytitle(String title);
+  List<Contact> findByPhoneNumber(String phoneNumber);
+  List<Contact> findByDateOfBirth(Integer fromDate, Integer toDate);
   Contact findByName(String Name);
+  void addBulkContact(List<Contact> contactList);
+  void deleteBulkContact(List<Contact> contactList);
+
 
 }
