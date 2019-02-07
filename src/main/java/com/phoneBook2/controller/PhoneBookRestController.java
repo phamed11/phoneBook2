@@ -89,9 +89,8 @@ public class PhoneBookRestController {
   }
 
   @PostMapping("/badd")
-  public ResponseEntity<?> bulkAdd(@RequestBody List<Contact> contactList) {
+  public void bulkAdd(@RequestBody List<Contact> contactList) {
     contactService.addBulkContact(contactList);
-    return ResponseEntity.ok("added");
   }
 
   @GetMapping("/bDate")

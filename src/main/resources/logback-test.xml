@@ -12,6 +12,15 @@
         </layout>
     </appender>
 
+    <appender name="htmlAppender" class="ch.qos.logback.core.FileAppender">
+        <file>${LOGS}/log.html</file>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.html.HTMLLayout">
+                <pattern>%thread%level%logger%msg</pattern>
+            </layout>
+        </encoder>
+    </appender>
+
     <appender name="RollingFile"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOGS}/phoneBook2-boot-logger.log</file>
@@ -55,10 +64,11 @@
     </root>
 
     <!--LOG "com.PhoneBook.*" at TRACE level -->
-    <logger name="com.PhoneBook" level="trace" additivity="false">
+    <logger name="com.phoneBook2" level="trace" additivity="false">
         <appender-ref ref="RollingFile"/>
         <appender-ref ref="Console"/>
         <appender-ref ref="SevereRollingFile"/>
+        <appender-ref ref="htmlAppender"/>
     </logger>
 
     <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
