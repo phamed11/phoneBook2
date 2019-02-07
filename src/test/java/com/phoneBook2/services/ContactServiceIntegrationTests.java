@@ -1,6 +1,7 @@
 package com.phoneBook2.services;
 
 import com.phoneBook2.exceptions.ContactNotFoundException;
+import com.phoneBook2.exceptions.ParamaterNotProvidedException;
 import com.phoneBook2.models.Address;
 import com.phoneBook2.models.Contact;
 import com.phoneBook2.repositories.ContactRepository;
@@ -11,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.nio.file.Paths;
@@ -22,8 +22,6 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-//@TestPropertySource(
-//    locations = "classpath:application.properties")
 public class ContactServiceIntegrationTests {
 
   private static final long TEST_DATA_SIZE = 12;
@@ -116,31 +114,71 @@ public class ContactServiceIntegrationTests {
   }
 
   @Test
-  public void findByLastNameFirstNameTitle() {
+  public void findByLastNameFirstNameTitle_firstNameANDLastName() {
+    List<Contact> results = contactService.findByLastNameFirstNameTitle("Doe", "John", null);
+
+    Assert.assertEquals(1L, results.size());
+  }
+
+  @Test
+  public void findByLastNameFirstNameTitle_firstNameANDTitle() {
+    List<Contact> results = contactService.findByLastNameFirstNameTitle(null, "John", "Mr");
+
+    Assert.assertEquals(0, results.size());
   }
 
   @Test
   public void findByFirstName() {
+    List<Contact> results = contactService.findByFirstName("John");
+
+    Assert.assertEquals(2, results.size());
+  }
+
+  @Test(expected = ParamaterNotProvidedException.class)
+  public void findByFirstName_emptyString() {
+    List<Contact> results = contactService.findByFirstName("");
+  }
+
+  @Test(expected = ParamaterNotProvidedException.class)
+  public void findByLastName_Null() {
+    List<Contact> results = contactService.findByLastName(null);
   }
 
   @Test
-  public void findByLastName() {
+  public void findByLastName_Success() {
+    List<Contact> results = contactService.findByLastName("Doe");
+
+    Assert.assertEquals(2, results.size());
   }
 
   @Test
   public void findBytitle() {
+    List<Contact> results = contactService.findBytitle("Mr");
+
+    Assert.assertEquals(3, results.size());
+
   }
 
   @Test
   public void findByPhoneNumber() {
+    List<Contact> results = contactService.findByPhoneNumber("1-202-555-0189");
+
+    Assert.assertEquals(1, results.size());
   }
 
   @Test
   public void findByDateOfBirth() {
+    List<Contact> results = contactService.findByDateOfBirth(19771212, 19891112);
+
+    Assert.assertEquals(1, results.size());
   }
 
   @Test
   public void findByName() {
+    Contact results = contactService.findByName("Jane Doe");
+
+    Assert.assertEquals(results.fullName(), "Jane Doe");
+
   }
 
   @Test

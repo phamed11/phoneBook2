@@ -59,11 +59,7 @@ public class ContactServiceImpl implements ContactService, HasLogger {
   }
 
   @Override
-  public List<Contact> findByLastNameFirstNameTitle(String lastName, String firstName, String title) throws ParamaterNotProvidedException {
-    if (lastName == null || "".equals(lastName) || firstName == null || "".equals(firstName)
-        || title == null || "".equals(title)) {
-      throw new ParamaterNotProvidedException("Paramater is not provided");
-    }
+  public List<Contact> findByLastNameFirstNameTitle(String lastName, String firstName, String title)  {
     return contactRepository.filter(lastName, firstName, title);
   }
 
