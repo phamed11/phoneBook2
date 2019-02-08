@@ -59,7 +59,7 @@ public class ContactServiceImpl implements ContactService, HasLogger {
   }
 
   @Override
-  public List<Contact> findByLastNameFirstNameTitle(String lastName, String firstName, String title)  {
+  public List<Contact> findByLastNameFirstNameTitle(String lastName, String firstName, String title) {
     return contactRepository.filter(lastName, firstName, title);
   }
 
@@ -133,11 +133,10 @@ public class ContactServiceImpl implements ContactService, HasLogger {
       throw new ContactNotProvidedException("Empty or non existent contactlist");
     }
     for (Contact contact : contactList) {
-      if (contactExistsByName(contact.fullName())) {
+      try {
         deleteContact(contact);
-      } else {
-        getLogger().error(contact.fullName() + " does not exist");
-        throw new ContactNotFoundException("contact not found");
+      } catch (ContactNotFoundException e) {
+        getLogger().error(contact.fullName() + " not deleted");
       }
     }
   }
@@ -150,5 +149,6 @@ public class ContactServiceImpl implements ContactService, HasLogger {
     return contactRepository.findByAllAddress(address);
   }
 }
+
 
 
