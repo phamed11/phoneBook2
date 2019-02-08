@@ -1,6 +1,7 @@
 package com.phoneBook2.controller;
 
 import com.phoneBook2.exceptions.ContactNotFoundException;
+import com.phoneBook2.exceptions.ContactNotProvidedException;
 import com.phoneBook2.exceptions.ParamaterNotProvidedException;
 import com.phoneBook2.models.Contact;
 import com.phoneBook2.services.ContactService;
@@ -45,20 +46,31 @@ public class PhoneBookRestController {
 
   @DeleteMapping("/delete")
   public ResponseEntity<?> deleteContact(@RequestBody Contact contact) {
-    if (contactService.contactExistsByName(contact.fullName())) {
-      contactService.deleteContact(contact);
-      return ResponseEntity.status(200).body("Contact with name: " + contact.fullName() + " deleted");
-    } else {
-      return ResponseEntity.status(404).body("Contact not found");
+    try {
+      if (contactService.contactExistsByName(contact.fullName())) {
+        contactService.deleteContact(contact);
+        return ResponseEntity.status(200).body("Contact with name: " + contact.fullName() + " deleted");
+      } else {
+        return ResponseEntity.status(404).body("Contact not found");
+      }
+    } catch (ContactNotProvidedException e) {
+      return new ResponseEntity<>("No contact provided", HttpStatus.BAD_REQUEST);
     }
   }
 
   @GetMapping("/filter")
-  public List<Contact> findByLastNameOrFirstNameOrTitle(@RequestParam(value = "lastName", required = false) String lastName,
+  public ResponseEntity<?> findByLastNameOrFirstNameOrTitle(@RequestParam(value = "lastName", required = false) String lastName,
                                                         @RequestParam(value = "firstName", required = false) String firstName,
                                                         @RequestParam(value = "title", required = false) String title) {
-    return contactService.findByLastNameFirstNameTitle(lastName, firstName, title);
-  }
+    try {
+      if (contactService.findByLastNameFirstNameTitle(lastName, firstName, title).size() != 0) {
+        return new ResponseEntity<>(contactService.findByLastNameFirstNameTitle(lastName, firstName, title), HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>("No contact not found", HttpStatus.NOT_FOUND);
+      }
+    } catch (ParamaterNotProvidedException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }  }
 
   @GetMapping("/firstName")
   public ResponseEntity<?> findByFirstName(@RequestParam(value = "firstName", required = false) String firstName) {
@@ -144,8 +156,15 @@ public class PhoneBookRestController {
   }
 
   @GetMapping("/address")
-  public List<Contact> findbyAddress(@RequestParam(value = "address", required = false) String address) {
-    return contactService.findByAddress(address);
-  }
+  public ResponseEntity<?> findByAddress(@RequestParam(value = "address", required = false) String address) {
+    try {
+      if (contactService.findByAddress(address).size() != 0) {
+        return new ResponseEntity<>(contactService.findByAddress(address), HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>("No contact not found", HttpStatus.NOT_FOUND);
+      }
+    } catch (ParamaterNotProvidedException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }  }
 }
 
