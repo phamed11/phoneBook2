@@ -1,9 +1,12 @@
 package com.phoneBook2.controller;
 
+import com.phoneBook2.exceptions.ContactNotFoundException;
+import com.phoneBook2.exceptions.ParamaterNotProvidedException;
 import com.phoneBook2.models.Contact;
 import com.phoneBook2.services.ContactService;
 import com.phoneBook2.services.JsonConverterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,50 +60,91 @@ public class PhoneBookRestController {
     return contactService.findByLastNameFirstNameTitle(lastName, firstName, title);
   }
 
-  @GetMapping("/fname")
-  public List<Contact> findByFirstName(@RequestParam(value = "firstName", required = true) String firstName) {
-    return contactService.findByFirstName(firstName);
+  @GetMapping("/firstName")
+  public ResponseEntity<?> findByFirstName(@RequestParam(value = "firstName", required = false) String firstName) {
+    try {
+      if (contactService.findByFirstName(firstName).size() != 0) {
+        return new ResponseEntity<>(contactService.findByFirstName(firstName), HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>("No contact not found", HttpStatus.NOT_FOUND);
+      }
+    } catch (ParamaterNotProvidedException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
   }
 
-  @GetMapping("/lname")
-  public List<Contact> findByLastName(@RequestParam(value = "lastName", required = true) String lastName) {
-    return contactService.findByLastName(lastName);
+
+  @GetMapping("/lastName")
+  public ResponseEntity<?> findByLastName(@RequestParam(value = "lastName", required = false) String lastName) {
+    try {
+      if (contactService.findByLastName(lastName).size() != 0) {
+        return new ResponseEntity<>(contactService.findByLastName(lastName), HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>("No contact not found", HttpStatus.NOT_FOUND);
+      }
+    } catch (ParamaterNotProvidedException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
   }
 
   @GetMapping("/title")
-  public List<Contact> findByTitle(@RequestParam(value = "title", required = true) String title) {
-    return contactService.findBytitle(title);
+  public ResponseEntity<?> findByTitle(@RequestParam(value = "title", required = false) String title) {
+    try {
+      if (contactService.findBytitle(title).size() != 0) {
+        return new ResponseEntity<>(contactService.findBytitle(title), HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>("No contact not found", HttpStatus.NOT_FOUND);
+      }
+    } catch (ParamaterNotProvidedException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
   }
 
   @GetMapping("/name")
-  public Contact findByName(@RequestParam(value = "name", required = true) String name) {
-    return contactService.findByName(name);
+  public ResponseEntity<?> findByName(@RequestParam(value = "name", required = false) String name) {
+    try {
+      if (contactService.findByName(name) != null) {
+        return new ResponseEntity<>(contactService.findByName(name), HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>("No contact not found", HttpStatus.NOT_FOUND);
+      }
+    } catch (ParamaterNotProvidedException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
   }
 
   @GetMapping("/phone")
-  public List<Contact> findByPhoneNumber(@RequestParam(value = "phone", required = true) String phoneNumber) {
-    return contactService.findByPhoneNumber(phoneNumber);
+  public ResponseEntity<?> findByPhoneNumber(@RequestParam(value = "phone", required = false) String phoneNumber) {
+    try {
+      if (contactService.findByPhoneNumber(phoneNumber).size() != 0) {
+        return new ResponseEntity<>(contactService.findByPhoneNumber(phoneNumber), HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>("No contact not found", HttpStatus.NOT_FOUND);
+      }
+    } catch (ParamaterNotProvidedException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
   }
 
-  @DeleteMapping("/bdelete")
+  @DeleteMapping("/bulkDelete")
   public ResponseEntity<?> bulkDelete(@RequestBody List<Contact> contactList) {
     contactService.deleteBulkContact(contactList);
     return ResponseEntity.status(200).body("deleted");
   }
 
-  @PostMapping("/badd")
+  @PostMapping("/bulkAdd")
   public void bulkAdd(@RequestBody List<Contact> contactList) {
     contactService.addBulkContact(contactList);
   }
 
-  @GetMapping("/bDate")
-  public List<Contact> findByDateOfBirth(@RequestParam (value = "fromDate", required = true) Integer fromDate,
-                                         @RequestParam (value = "toDate", required = true) Integer toDate) {
+  @GetMapping("/birthDate")
+  public List<Contact> findByDateOfBirth(@RequestParam(value = "fromDate", required = false) Integer fromDate,
+                                         @RequestParam(value = "toDate", required = false) Integer toDate) {
     return contactService.findByDateOfBirth(fromDate, toDate);
   }
 
   @GetMapping("/address")
-  public List<Contact> findbyAddress(@RequestParam (value = "address", required = true) String address) {
+  public List<Contact> findbyAddress(@RequestParam(value = "address", required = false) String address) {
     return contactService.findByAddress(address);
   }
 }
