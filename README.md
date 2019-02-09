@@ -1,7 +1,7 @@
 [![CircleCI](https://circleci.com/gh/phamed11/phoneBook2.svg?style=svg&circle-token=21e1f731e64b10dac4876c4226d44df1f21da8b8)](https://circleci.com/gh/phamed11/phoneBook2)
 
 
-# Phone book command-line application
+# Phone book Rest application
 
 Simple command-line application to store phone numbers in Json format.
 
