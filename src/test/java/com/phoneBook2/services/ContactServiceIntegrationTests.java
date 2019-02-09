@@ -102,16 +102,6 @@ public class ContactServiceIntegrationTests {
     Assert.assertEquals(TEST_DATA_SIZE - 1, contactsAfter.size());
   }
 
-  @Test(expected = ContactNotFoundException.class)
-  public void deleteContactIfNotExisting() {
-    List<Contact> contactsBefore = getAllContacts();
-    contactService.deleteContact(testContact);
-    List<Contact> contactsAfter = getAllContacts();
-
-    Assert.assertEquals(TEST_DATA_SIZE, contactsBefore.size());
-    Assert.assertEquals(TEST_DATA_SIZE, contactsAfter.size());
-  }
-
   @Test
   public void findByLastNameFirstNameTitle_firstNameANDLastName() {
     List<Contact> results = contactService.findByLastNameFirstNameTitle("Doe", "John", null);

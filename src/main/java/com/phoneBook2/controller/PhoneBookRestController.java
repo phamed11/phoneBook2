@@ -28,10 +28,12 @@ public class PhoneBookRestController {
   }
 
   @PostMapping("/add")
-  public ResponseEntity<?> main(@RequestBody Contact contact) {
-    boolean exists = contactService.contactExistsByName(contact.fullName());
-    contactService.addContact(contact);
-    return ResponseEntity.ok(exists ? "Contact already exists" : "Contact with name: " + contact.fullName() + " created.");
+  public ResponseEntity<?> main(@RequestBody(required = false) Contact contact) {
+    try {
+      return ResponseEntity.ok(contactService.addContact(contact));
+    } catch (ContactNotProvidedException e) {
+      return ResponseEntity.status(400).body(e.getMessage());
+    }
   }
 
   @GetMapping("/db")
@@ -45,23 +47,18 @@ public class PhoneBookRestController {
   }
 
   @DeleteMapping("/delete")
-  public ResponseEntity<?> deleteContact(@RequestBody Contact contact) {
+  public ResponseEntity<?> deleteContact(@RequestBody(required = false) Contact contact) {
     try {
-      if (contactService.contactExistsByName(contact.fullName())) {
-        contactService.deleteContact(contact);
-        return ResponseEntity.status(200).body("Contact with name: " + contact.fullName() + " deleted");
-      } else {
-        return ResponseEntity.status(404).body("Contact not found");
-      }
+      return ResponseEntity.ok(contactService.deleteContact(contact));
     } catch (ContactNotProvidedException e) {
-      return new ResponseEntity<>("No contact provided", HttpStatus.BAD_REQUEST);
+      return ResponseEntity.status(400).body(e.getMessage());
     }
   }
 
   @GetMapping("/filter")
   public ResponseEntity<?> findByLastNameOrFirstNameOrTitle(@RequestParam(value = "lastName", required = false) String lastName,
-                                                        @RequestParam(value = "firstName", required = false) String firstName,
-                                                        @RequestParam(value = "title", required = false) String title) {
+                                                            @RequestParam(value = "firstName", required = false) String firstName,
+                                                            @RequestParam(value = "title", required = false) String title) {
     try {
       if (contactService.findByLastNameFirstNameTitle(lastName, firstName, title).size() != 0) {
         return new ResponseEntity<>(contactService.findByLastNameFirstNameTitle(lastName, firstName, title), HttpStatus.OK);
@@ -70,7 +67,8 @@ public class PhoneBookRestController {
       }
     } catch (ParamaterNotProvidedException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-    }  }
+    }
+  }
 
   @GetMapping("/firstName")
   public ResponseEntity<?> findByFirstName(@RequestParam(value = "firstName", required = false) String firstName) {
@@ -139,14 +137,21 @@ public class PhoneBookRestController {
   }
 
   @DeleteMapping("/bulkDelete")
-  public ResponseEntity<?> bulkDelete(@RequestBody List<Contact> contactList) {
-    contactService.deleteBulkContact(contactList);
-    return ResponseEntity.status(200).body("deleted");
+  public ResponseEntity<?> bulkDelete(@RequestBody(required = false) List<Contact> contactList) {
+    try {
+      return ResponseEntity.ok(contactService.deleteBulkContact(contactList));
+    } catch (ContactNotProvidedException e) {
+      return ResponseEntity.status(400).body(e.getMessage());
+    }
   }
 
   @PostMapping("/bulkAdd")
-  public void bulkAdd(@RequestBody List<Contact> contactList) {
-    contactService.addBulkContact(contactList);
+  public ResponseEntity<?> bulkAdd(@RequestBody(required = false) List<Contact> contactList) {
+    try {
+      return ResponseEntity.ok(contactService.addBulkContact(contactList));
+    } catch (ContactNotProvidedException e) {
+      return ResponseEntity.status(400).body(e.getMessage());
+    }
   }
 
   @GetMapping("/birthDate")
@@ -165,6 +170,7 @@ public class PhoneBookRestController {
       }
     } catch (ParamaterNotProvidedException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-    }  }
+    }
+  }
 }
 
