@@ -10,11 +10,11 @@ public interface ContactService {
 
   List<Contact> allContacts();
 
-  void addContact(Contact contact) throws ParamaterNotProvidedException;
+  String addContact(Contact contact) throws ParamaterNotProvidedException;
 
   boolean contactExistsByName(String name) throws ParamaterNotProvidedException;
 
-  void deleteContact(Contact contact) throws ParamaterNotProvidedException, ContactNotFoundException;
+  String deleteContact(Contact contact) throws ParamaterNotProvidedException, ContactNotFoundException;
 
   List<Contact> findByLastNameFirstNameTitle(String lastName, String firstName, String title);
 
@@ -30,9 +30,9 @@ public interface ContactService {
 
   Contact findByName(String Name);
 
-  void addBulkContact(List<Contact> contactList);
+  List<String> addBulkContact(List<Contact> contactList);
 
-  void deleteBulkContact(List<Contact> contactList);
+  List<String> deleteBulkContact(List<Contact> contactList);
 
   List<Contact> findByAddress(String address);
 

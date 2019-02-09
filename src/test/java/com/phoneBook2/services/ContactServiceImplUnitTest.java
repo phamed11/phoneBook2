@@ -72,13 +72,6 @@ public class ContactServiceImplUnitTest {
     contactService.addContact(null);
   }
 
-  @Test(expected = ContactAlreadyExistsException.class)
-  public void addContactContactAlreadyExists() throws ContactAlreadyExistsException {
-    when(contactRepository.findbyName(fullName)).thenReturn(testContact);
-    contactService.contactExistsByName(fullName);
-    contactService.addContact(testContact);
-  }
-
   @Test
   public void addContactContactSuccess() throws ContactAlreadyExistsException {
     when(contactRepository.findbyName(fullName)).thenReturn(null);
@@ -113,29 +106,12 @@ public class ContactServiceImplUnitTest {
     contactService.deleteContact(null);
   }
 
-  @Test(expected = ContactNotFoundException.class)
-  public void deleteContactContactContactNotExists() {
-    when(contactRepository.findbyName(testContact.fullName())).thenReturn(null);
-    contactService.contactExistsByName(testContact.fullName());
-    contactService.deleteContact(testContact);
-  }
-
   @Test
   public void deleteContactContactContactExists() {
     when(contactRepository.findbyName(testContact.fullName())).thenReturn(testContact);
     contactService.contactExistsByName(testContact.fullName());
     contactService.deleteContact(testContact);
   }
-
-//  @Test(expected = ParamaterNotProvidedException.class)
-//  public void findByLastNameFirstNameTitleNull() {
-//    contactService.findByLastNameFirstNameTitle(lastName, null, null);
-//  }
-//
-//  @Test(expected = ParamaterNotProvidedException.class)
-//  public void findByLastNameFirstNameTitleEmptyString() {
-//    contactService.findByLastNameFirstNameTitle(lastName, firstName, "");
-//  }
 
   @Test(expected = ParamaterNotProvidedException.class)
   public void findByFirstName() {
