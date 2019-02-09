@@ -17,7 +17,7 @@ public class ContactsWebController {
   }
 
   @GetMapping("/")
-  public String mainPage(Model model){
+  public String mainPage(Model model) {
     model.addAttribute("allContacts", contactService.allContacts());
     return "index";
   }

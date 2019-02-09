@@ -39,14 +39,6 @@ public class Phonebook2Application implements CommandLineRunner {
 
 //    jsonConverterService.saveJsonToDB(Paths.get(FROM_DATA_JSON));
 //
-//    System.out.println(contactService.allContacts().size());
-//
-//
-//    Contact imre = new Contact("Jani", "Kiss", "19999999", (Arrays.asList("333333")),
-//        (Arrays.asList(new Address("asdf", "asdf", "asdf", "asdf"))));
-
-//    contactService.addContact(imre);
-
 //    jsonConverterService.contactsToJson(contactService.allContacts(), Paths.get(TO_DATA_JSON));
 
   }

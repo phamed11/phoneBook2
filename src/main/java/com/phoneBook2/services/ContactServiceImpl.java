@@ -136,27 +136,27 @@ public class ContactServiceImpl implements ContactService, HasLogger {
     return response;
   }
 
-    @Override
-    public List<String> deleteBulkContact (List < Contact > contactList) throws
-    ContactNotFoundException, ContactNotProvidedException {
-      if (contactList == null || contactList.size() == 0) {
-        throw new ContactNotProvidedException("Empty or non existent contacts");
-      }
-      List<String> response = new ArrayList<>();
-      for (Contact contact : contactList) {
-          response.add(deleteContact(contact));
-      }
-      return response;
+  @Override
+  public List<String> deleteBulkContact(List<Contact> contactList) throws
+      ContactNotFoundException, ContactNotProvidedException {
+    if (contactList == null || contactList.size() == 0) {
+      throw new ContactNotProvidedException("Empty or non existent contacts");
     }
-
-    @Override
-    public List<Contact> findByAddress (String address) throws ParamaterNotProvidedException {
-      if (address == null || "".equals(address)) {
-        throw new ParamaterNotProvidedException("Parameter not provided");
-      }
-      return contactRepository.findByAllAddress(address);
+    List<String> response = new ArrayList<>();
+    for (Contact contact : contactList) {
+      response.add(deleteContact(contact));
     }
+    return response;
   }
+
+  @Override
+  public List<Contact> findByAddress(String address) throws ParamaterNotProvidedException {
+    if (address == null || "".equals(address)) {
+      throw new ParamaterNotProvidedException("Parameter not provided");
+    }
+    return contactRepository.findByAllAddress(address);
+  }
+}
 
 
 
