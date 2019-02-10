@@ -24,7 +24,7 @@ Simple command-line application to store phone numbers in Json format.
 
 | Key | Value |
 | --- | ----- | 
-|DB_NAME_LO | jdbc:mysql://localhost:3306/''create it locally |
+|DB_NAME_LO | *jdbc:mysql://localhost:3306/''create it locally* |
 |DB_USERNAME | *your local mysql username* |
 |DB_PASSWORD | *your local mysql password* |
 

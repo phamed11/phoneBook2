@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 @Service
 public class JsonConverterService implements HasLogger {
 
-  ContactRepository contactRepository;
-  public static final Type COLLECTION_TYPE = new TypeToken<Collection<Contact>>() {
+  private ContactRepository contactRepository;
+  private static final Type COLLECTION_TYPE = new TypeToken<Collection<Contact>>() {
   }.getType();
 
   @Autowired

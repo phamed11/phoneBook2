@@ -127,7 +127,7 @@ public class ContactServiceImpl implements ContactService, HasLogger {
   @Override
   public List<String> addBulkContact(List<Contact> contactList) throws ContactNotProvidedException {
     if (contactList == null || contactList.size() == 0) {
-      throw new ContactNotProvidedException("Empty or non existent contactlist");
+      throw new ContactNotProvidedException("Empty or non existent contact list");
     }
     List<String> response = new ArrayList<>();
     for (Contact contact : contactList) {
@@ -140,7 +140,7 @@ public class ContactServiceImpl implements ContactService, HasLogger {
   public List<String> deleteBulkContact(List<Contact> contactList) throws
       ContactNotFoundException, ContactNotProvidedException {
     if (contactList == null || contactList.size() == 0) {
-      throw new ContactNotProvidedException("Empty or non existent contacts");
+      throw new ContactNotProvidedException("Empty or non existent contact list");
     }
     List<String> response = new ArrayList<>();
     for (Contact contact : contactList) {

@@ -1,7 +1,5 @@
 package com.phoneBook2;
 
-import com.phoneBook2.models.Address;
-import com.phoneBook2.models.Contact;
 import com.phoneBook2.services.ContactService;
 import com.phoneBook2.services.JsonConverterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +7,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
 
 
 @SpringBootApplication
