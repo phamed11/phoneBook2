@@ -39,4 +39,5 @@ dependencies {
 	implementation 'com.google.code.gson:gson:2.8.5'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: '2.1.2.RELEASE'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.1.1'
 }
