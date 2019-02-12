@@ -1,4 +1,5 @@
-[![CircleCI](https://circleci.com/gh/phamed11/phoneBook2.svg?style=svg&circle-token=21e1f731e64b10dac4876c4226d44df1f21da8b8)](https://circleci.com/gh/phamed11/phoneBook2)
+[![CircleCI](https://circleci.com/gh/phamed11/phoneBook2.svg?style=svg)](https://circleci.com/gh/phamed11/phoneBook2) 
+[![Build Status](https://travis-ci.org/phamed11/phoneBook2.svg?branch=master)](https://travis-ci.org/phamed11/phoneBook2)
 
 
 # Phone book Rest application
